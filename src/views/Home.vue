@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-      <Navbar />       
+      <Navbar></Navbar>       
         <div class="container h-100">
           <div class="row h-100 justify-content-center align-items-center">
             <div class="col-md-5">
@@ -24,7 +24,7 @@
             </div>
           </div>
         </div>
-        <Login />
+        <Login></Login>
     </div>
 </template>
 
@@ -36,7 +36,11 @@ import Login from "@/components/Login.vue";
 
 export default {
   name: "home",
-  components:  Products, Navbar, Login,
+  components: { 
+    Products,
+    Navbar, 
+    Login,
+    }
 };
 </script>
 

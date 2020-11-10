@@ -163,7 +163,9 @@ export default {
   props: {
     msg: String
   },
-  components: Footer,
+  components: { Footer, 
+  
+  },
 
   methods: {
     Logout(){

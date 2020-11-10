@@ -90,7 +90,7 @@
 import {fb, db} from "../firebase";
 
 export default {
-  name: "Category",
+  name: 'Category',
   data(){
     return {
       editmode: false,
