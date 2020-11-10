@@ -1,12 +1,11 @@
 <template>
-    <div class="home">
-      <Navbar />       
+    <div class="hero">
         <div class="container h-100">
           <div class="row h-100 justify-content-center align-items-center">
             <div class="col-md-5">
               <div class="hero-content">
                 <h1 class="hero-title">
-                  MaxnClaire Bistro
+                  Vue Shop For Developers
                 </h1>
                 <p>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos numquam tempora, iure delectus totam minus quam aperiam ratione dolores magni voluptates ut necessitatibus odio ipsum fuga, voluptas ab praesentium nihil?
@@ -24,19 +23,15 @@
             </div>
           </div>
         </div>
-        <Login />
     </div>
 </template>
 
 <script>
-
-import Navbar from "@/components/Navbar.vue";
-import Products from "@/sections/Products.vue";
-import Login from "@/components/Login.vue";
-
 export default {
-  name: "home",
-  components:  Products, Navbar, Login,
+  name: "Hero",
+  props: {
+    msg: String
+  }
 };
 </script>
 
