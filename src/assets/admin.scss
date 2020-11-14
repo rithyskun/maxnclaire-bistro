@@ -1,5 +1,4 @@
-
-@-webkit-keyframes swing {
+  @-webkit-keyframes swing {
     0%, 30%, 50%, 70%, 100% {
       -webkit-transform: rotate(0deg);
       transform: rotate(0deg); }
@@ -408,7 +407,7 @@
       left: 0px; }
     @media screen and (min-width: 768px) {
       .page-wrapper.toggled .page-content {
-        padding-left: 240px; } }
+        padding-left: 265px; } }
     @media screen and (max-width: 768px) {
       .page-wrapper.toggled .page-content .overlay {
         display: block; } }

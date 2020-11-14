@@ -1,9 +1,12 @@
 @import '~bootstrap/scss/bootstrap';
 @import './admin.scss';
 
-
-.container.fluid.p-5 {
-    padding: 1rem !important;
+.container{
+    max-width: 1660px;
+}
+.container-fluid {
+    padding-right: 5px;
+    
 }
 .fa, .fas {
     font-size: 18px;

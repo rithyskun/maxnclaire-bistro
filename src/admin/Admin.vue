@@ -1,9 +1,7 @@
 <template>
  <div class="admin">
     <div class="page-wrapper default-theme sidebar-bg bg1 toggled">
-      <a id="show-sidebar" @click="closeMenu" class="btn btn-sm btn-dark" href="#">
-            <i class="fas fa-bars"></i>
-        </a>
+      
         <nav class="sidebar-wrapper">
             <div class="sidebar-content">
                 <!-- sidebar-brand  -->
@@ -113,9 +111,9 @@
                             </router-link>
                         </li>
                         <li>
-                            <router-link to="/admin/users" href="#">
+                            <router-link to="/admin/profile" href="#">
                                 <i class="fa fa-users"></i>
-                                <span class="menu-text">Users</span>
+                                <span class="menu-text">Profile</span>
                             </router-link>
                         </li>
                         <li>                            
@@ -137,15 +135,60 @@
                     </a>
                 </div>
             </div>   
+            
         </nav>
         <!-- page-content  -->
-        <main class="contaniner page-content pt-2">            
-            <div id="overlay" class="overlay"></div>            
-            <div class="container-fluid p-5">
+        <div class="page-wrapper page-content">            
+           <div id="overlay" class="overlay">                
+           </div>
+                   
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a id="show-sidebar" v-show="showToggle" @click="openMenu" class="btn btn-sm btn-dark" href="#">
+                         <i class="fas fa-bars"></i>
+                    </a>
+                    <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#">Disabled</a>
+                        </li>
+                        </ul>
+                        <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    </div>
+                    </nav>      
+
+
+
+
                 <router-view/>
                 
             </div>
-        </main>
+        </div>
         <!-- page-content" -->
     </div>
     <!-- page-wrapper -->
@@ -159,14 +202,19 @@ import Footer from '../components/Footer.vue';
 import {fb} from '../firebase';
 
 export default {
-  name: "Admin",
+  name: "Admin",  
   props: {
     msg: String
   },
-  components: { Footer, 
-  
-  },
+  components: { 
+      Footer, 
 
+  },
+    data() {
+        return {
+        showToggle: false,    
+        }
+    },
   methods: {
     Logout(){
         fb.auth().signOut()
@@ -178,7 +226,13 @@ export default {
     },
     closeMenu(){
         $('.page-wrapper').toggleClass('toggled');
-    }
+        this.showToggle = true;
+    },
+    openMenu(){
+        this.showToggle = false;
+        $('.page-wrapper').toggleClass('toggled');
+        
+    },
   }
 };
 </script>

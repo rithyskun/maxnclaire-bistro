@@ -55,10 +55,11 @@
                               {{product.pstock}}                                      
                             </td>
                             <td>                            
-                              <img :src="product.pphoto" alt="Product" width="50px" height="50px">
+                              <img class="ml-1" v-for="images in product.pphoto" :key="images.id" :src="images" alt="Product" width="50px" height="50px">
                             </td>
                             <td>
-                              {{product.pstatus}}                                      
+                              {{product.pstatus}}
+                               <label type="checkbox" for="checkbox"></label>                                  
                             </td>
                             <td>
                               {{product.pupdateon}}

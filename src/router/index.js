@@ -7,7 +7,7 @@ import Category from "../admin/Category.vue";
 import Products from "../admin/Products.vue";
 import Orders from "../admin/Orders.vue";
 import Reports from "../admin/Reports.vue";
-import Users from "../admin/Users.vue";
+import Profile from "../admin/Profile.vue";
 import Setting from "../admin/Setting.vue";
 import {fb} from "../firebase";
 
@@ -51,9 +51,9 @@ const routes = [
         component: Reports
       },
       {
-        path: "users",
-        name: "Users",
-        component: Users
+        path: "profile",
+        name: "Profile",
+        component: Profile
       },
       {
         path: "setting",
