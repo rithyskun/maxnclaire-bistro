@@ -21,7 +21,7 @@
                         <span class="user-name">Rithy
                             <strong>SKUN</strong>
                         </span>
-                        <span class="user-role">Admin</span>
+                        <span class="user-role">{{email}}</span>
                         <span class="user-status">
                             <i class="fa fa-circle"></i>
                             <span>Online</span>
@@ -198,42 +198,47 @@
 
 <script>
 
-import Footer from '../components/Footer.vue';
-import {fb} from '../firebase';
+import Footer from '@/components/Footer.vue';
+import {fb} from '@/firebase';
 
 export default {
   name: "Admin",  
-  props: {
-    msg: String
-  },
   components: { 
       Footer, 
 
   },
     data() {
         return {
-        showToggle: false,    
-        }
+        showToggle: false,        
+        name: null,
+        email: null,
+
+      }
     },
-  methods: {
-    Logout(){
-        fb.auth().signOut()
-        .then(()=> {
-            this.$router.replace('/');
-        }).catch(()=> {
-            console.log(err);
-        });
+    created(){
+        var user = fb.auth().currentUser;
+        this.name = user.uid;
+        this.email = user.email;
     },
-    closeMenu(){
-        $('.page-wrapper').toggleClass('toggled');
-        this.showToggle = true;
-    },
-    openMenu(){
-        this.showToggle = false;
-        $('.page-wrapper').toggleClass('toggled');
-        
-    },
-  }
+    methods: {
+        Logout(){
+            fb.auth().signOut()
+            .then(()=> {
+                this.$router.replace('/');
+            }).catch(()=> {
+                console.log(err);
+            });
+        },
+        closeMenu(){
+            $('.page-wrapper').toggleClass('toggled');
+            this.showToggle = true;
+        },
+        openMenu(){
+            this.showToggle = false;
+            $('.page-wrapper').toggleClass('toggled');
+            
+        },
+    }
 };
 </script>
 

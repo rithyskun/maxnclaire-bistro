@@ -195,6 +195,9 @@ export default {
       products: db.collection('products'), 
     }
   },
+  created(){
+       
+  },
   methods:{
     deleteImage(img,index){
 
@@ -269,7 +272,7 @@ export default {
     fetchData(){    
       
     },
-    addProduct(){           
+    addProduct(){        
         this.editmode = false;                
         this.$firestore.products.add(this.product)
         $('#AddProduct').modal('hide')
@@ -301,9 +304,7 @@ export default {
       this.reset();                        
       $('#AddProduct').modal('show')      
     },
-    created(){
-       
-    }
+    
   }
 };
 </script>

@@ -68,13 +68,13 @@
 
 <script>
 
-import {fb} from '../firebase';
+import {fb, db} from '@/firebase';
 
 
 export default {
   name: "Login",
-  props: {
-    msg: String
+  components: {
+
   },
   data(){
       return {
@@ -87,9 +87,9 @@ export default {
   methods:{
       login(){
           fb.auth().signInWithEmailAndPassword(this.email, this.password)
-                        .then(() => {
-                        $('#login').modal('hide')
-                          this.$router.replace('admin/dashboard');  
+                        .then((user) => {
+                        $('#login').modal('hide')                        
+                          this.$router.replace('admin/dashboard');                          
                         })
                         .catch(function(error) {
                             // Handle Errors here.
@@ -107,17 +107,16 @@ export default {
       register(){
             fb.auth().createUserWithEmailAndPassword(this.email, this.password)
                 .then((user) => {
-                    $('#login').modal('hide')
-                    
-                    // db.collection("profiles").doc(user.user.uid).set({
-                    //     name: this.name
-                    // })
-                    // .then(function() {
-                    //     console.log("Document successfully written!");
-                    // })
-                    // .catch(function(error) {
-                    //     console.error("Error writing document: ", error);
-                    // });
+                    $('#login').modal('hide')                    
+                    db.collection("profiles").doc(user.user.uid).set({
+                        name: this.name
+                    })
+                    .then(function() {
+                        console.log("Document successfully written!");
+                    })
+                    .catch(function(error) {
+                        console.error("Error writing document: ", error);
+                    });
 
                     this.$router.replace('admin/dashboard');
                 })
