@@ -122,6 +122,9 @@
                   <button type="submit" class="btn btn-primary">
                     Apply chagnes
                   </button>
+                  <button type="button" @click="resetPassword" class="btn btn-success ml-2">
+                    Reset Password
+                  </button>
                 </form>
               </div>
             </div>
@@ -170,6 +173,19 @@ export default {
     this.name = user.uid;
   },
   methods: {
+    resetPassword(){
+      const auth = fb.auth();      
+
+      auth.sendPasswordResetEmail(auth.currentUser.email).then(() =>  {
+        Toast.fire({
+            icon: 'success',
+            title: 'The reset password link has been sent'
+          })
+        
+      }).catch(function(error) {
+        // An error happened.
+      });
+    },
     updateProfile() {
       this.$firestore.profile.update(this.profile);
     },
