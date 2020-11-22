@@ -46,37 +46,85 @@
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="fullName">Full Name</label>
-                      <input type="text" class="form-control" id="name" v-model="profile.name"/>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        v-model="profile.name"
+                      />
                     </div>
                     <div class="form-group col-md-6">
                       <label for="fullName">Phone</label>
-                      <input type="text" class="form-control" id="phone" v-model="profile.phone"/>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="phone"
+                        v-model="profile.phone"
+                      />
                     </div>
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="Address">Address</label>
-                      <input type="text" class="form-control" id="address" v-model="profile.address"/>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="address"
+                        v-model="profile.address"
+                      />
                     </div>
                     <div class="form-group col-md-6">
                       <label for="City">City</label>
-                      <input type="text" class="form-control" id="city" v-model="profile.city"/>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="city"
+                        v-model="profile.city"
+                      />
                     </div>
                   </div>
 
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="Country">Country</label>
-                      <input type="text" class="form-control" id="country" v-model="profile.country"/>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="country"
+                        v-model="profile.country"
+                      />
                     </div>
                     <div class="form-group col-md-6">
                       <label for="PostCode">Post Code</label>
-                      <input type="text" class="form-control" id="postcode" v-model="profile.postcode"/>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="postcode"
+                        v-model="profile.postcode"
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="rolename">Role Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="rolename"
+                        v-model="profile.rolename"
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="status">Status</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="status"
+                        v-model="profile.status"
+                      />
                     </div>
                   </div>
                   <hr />
                   <button
-                    type="submit"
+                    type="button"
                     @click="updateProfile"
                     class="btn btn-primary"
                   >
@@ -96,33 +144,39 @@
                 <form>
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="fullName">Old Password</label>
-                      <input type="text" class="form-control" id="fullName" />
-                    </div>
-                  </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
                       <label for="inputAddress">New Password</label>
                       <input
-                        type="text"
+                        type="password"
                         class="form-control"
-                        id="inputAddress"
+                        id="newpassword"
+                        v-model="account.newpassword"
+                        required="required"
                       />
                     </div>
                     <div class="form-group col-md-6">
                       <label for="inputAddress2">Confirm New Password</label>
                       <input
-                        type="text"
+                        type="password"
                         class="form-control"
-                        id="inputAddress2"
+                        id="confirmpassword"
+                        v-model="account.confirmpassword"
+                        required="required"
                       />
                     </div>
                   </div>
                   <hr />
-                  <button type="submit" class="btn btn-primary">
-                    Apply chagnes
+                  <button
+                    @click="updatePassword"
+                    type="button"
+                    class="btn btn-primary"
+                  >
+                    Save chagnes
                   </button>
-                  <button type="button" @click="resetPassword" class="btn btn-success ml-2">
+                  <button
+                    type="button"
+                    @click="resetPassword"
+                    class="btn btn-success ml-2"
+                  >
                     Reset Password
                   </button>
                 </form>
@@ -136,8 +190,7 @@
 </template>
 
 <script>
-
-import {fb, db} from '@/firebase';
+import { fb, db } from "@/firebase";
 
 export default {
   name: "profile",
@@ -151,6 +204,8 @@ export default {
         city: null,
         country: null,
         postcode: null,
+        rolename: null,
+        status: null,
       },
       account: {
         email: null,
@@ -162,33 +217,72 @@ export default {
       },
     };
   },
-  firestore(){
+  firestore() {
     const user = fb.auth().currentUser;
-    return{
-      profile: db.collection('profiles').doc(user.uid),
-    }
+    return {
+      profile: db.collection("profiles").doc(user.uid),
+    };
   },
+
   created() {
     var user = fb.auth().currentUser;
     this.name = user.uid;
   },
   methods: {
-    resetPassword(){
-      const auth = fb.auth();      
-
-      auth.sendPasswordResetEmail(auth.currentUser.email).then(() =>  {
-        Toast.fire({
-            icon: 'success',
-            title: 'The reset password link has been sent'
-          })
-        
-      }).catch(function(error) {
-        // An error happened.
-      });
+    resetPassword() {
+      const auth = fb.auth();
+      auth
+        .sendPasswordResetEmail(auth.currentUser.email)
+        .then(() => {
+          Toast.fire({
+            icon: "success",
+            title: "The reset password link has been sent",
+          });
+        })
+        .catch((error) => {
+          // An error happened.
+        });
     },
     updateProfile() {
       this.$firestore.profile.update(this.profile);
     },
+    updatePassword() {
+      const user = fb.auth().currentUser;
+      if (this.account.newpassword == this.account.confirmpassword) {
+        user
+          .updatePassword(this.account.confirmpassword)
+          .then(() => {
+            Toast.fire({
+            icon: "success",
+            title: "The password has been updated.",
+           });
+           this.reset();
+          })
+          .catch((error) => {
+              console.log(error);
+          });
+      }
+      if (this.account.newpassword != this.account.confirmpassword) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'New and Confirm Password fill not match!'
+        })
+      }  
+
+      if (!this.account.newpassword) {
+        this.errors.push('New Password required.');
+      }
+      if (!this.account.confirmpassword) {
+        this.errors.push('Confirm Password required.');
+      } 
+      
+    },
+    reset(){
+      this.account.newpassword = '';
+      this.account.confirmpassword = ''
+    }
+
   },
 };
 </script>

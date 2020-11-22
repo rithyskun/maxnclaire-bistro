@@ -14,7 +14,7 @@
               </div>
               <div class="col-md-12">                
                 <button class="btn btn-primary" data-toggle="modal" @click="newModal">Add</button>
-                <div class="table-responsive mt-2">              
+                <div class="table-responsive mt-2 shadow-lg">              
                     <table class="table table-sm table-bordered">
                       <thead class="thead-light">
                         <tr>
@@ -58,8 +58,8 @@
                               <img class="ml-1" v-for="images in product.pphoto" :key="images.id" :src="images" alt="Product" width="50px" height="50px">
                             </td>
                             <td>
-                              {{product.pstatus}}
-                               <label type="checkbox" for="checkbox"></label>                                  
+                              
+                               <label type="checkbox" for="checkbox">{{product.pstatus}}</label>                                  
                             </td>
                             <td>
                               {{product.pupdateon}}
@@ -192,7 +192,7 @@ export default {
   },
   firestore(){
     return{
-      products: db.collection('products'), 
+      products: db.collection('products')      
     }
   },
   created(){

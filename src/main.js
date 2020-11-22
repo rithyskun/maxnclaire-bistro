@@ -18,11 +18,18 @@ Vue.use(VueFirestore, {
 import Swal from 'sweetalert2'
 window.Swal = Swal;
 
+import VueProgressBar from "vue-progressbar";
+Vue.use(VueProgressBar, {
+    color: "rgb(143, 255, 199)",
+    failedColor: "red",
+    height: "3px",
+});
+
 const Toast = Swal.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
-  timer: 1000,
+  timer: 2000,
   timerProgressBar: true,
   didOpen: (toast) => {
     toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -31,7 +38,10 @@ const Toast = Swal.mixin({
 })
 window.Toast = Toast;
 
-
+import moment from "moment";
+Vue.filter("myDate", function () {
+  return moment().format("YYYYMMDD HH:mm:ss");
+});
 
 // Assign jQuery with $
 import jQuery from 'jquery';
