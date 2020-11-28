@@ -15,9 +15,8 @@
             >
               New Category
             </button>
-            
           </div>
-          
+
           <div class="col-md-12">
             <div class="table-responsive mt-2 shadow-lg">
               <table class="table table-sm table-bordered">
@@ -25,20 +24,21 @@
                   <tr>
                     <th>Category Name</th>
                     <th>Category Description</th>
-                    <th>Modify on</th>
+                    <th>Update on</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="category in categories" :key="category.id">
                     <td>
-                      {{ category.data().name }}
+                      {{ category.data().cname }}
                     </td>
                     <td>
-                      {{ category.data().description }}
+                      {{ category.data().cdescription }}
                     </td>
                     <td>
-                      {{ category.data().timestamp | myDate }} | {{ category.data().updateBy }}
+                      {{ category.data().timestamp }} |
+                      {{ category.data().updateby }}
                     </td>
                     <td>
                       <a href="#">
@@ -95,24 +95,24 @@
                     "
                   >
                     <div class="form-group">
-                      <label for="category_name" class="col-form-label"
+                      <label for="category_cname" class="col-form-label"
                         >Category Name:</label
                       >
                       <input
                         type="text"
-                        v-model="category.name"
+                        v-model="category.cname"
                         class="form-control"
-                        id="category_name"
+                        id="category_cname"
                       />
                     </div>
                     <div class="form-group">
-                      <label for="category_description" class="col-form-label"
+                      <label for="category_cdescription" class="col-form-label"
                         >Category Description:</label
                       >
                       <textarea
-                        v-model="category.description"
+                        v-model="category.cdescription"
                         class="form-control"
-                        id="category_description"
+                        id="category_cdescription"
                       ></textarea>
                     </div>
                   </form>
@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import { fb, db } from "../firebase";
+import { fb, db } from "@/firebase";
 
 export default {
   name: "Category",
@@ -162,20 +162,19 @@ export default {
       editmode: false,
       categories: [],
       category: {
-        name: null,
-        description: null,
-        timestamp: "",
-        updateBy: "",
+        cname: null,
+        cdescription: null,
+        timestamp: null,
+        updateby: null,
       },
       activeItem: null,
     };
   },
   created() {
     this.watcher();
-    
   },
-  methods: {    
-    watcher() {      
+  methods: {
+    watcher() {
       db.collection("categories").onSnapshot((querySnapshot) => {
         this.categories = [];
         querySnapshot.forEach((doc) => {
@@ -186,23 +185,30 @@ export default {
     updateCategory() {
       const user = fb.auth().currentUser;
       const today = new Date();
-      const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      const dateTime = date +' '+ time;
-                    
-      this.category.timestamp = dateTime;
-      this.category.updateBy = user.email;
+      const date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+      const time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      const dateTime = date + " " + time;
 
+      this.category.timestamp = dateTime;
+      this.category.updateby = user.email;
+
+      this.editmode = true;
       db.collection("categories")
         .doc(this.activeItem)
         .update(this.category)
         .then(() => {
           $("#AddCategory").modal("hide");
           Toast.fire({
-                icon: "success",
-                title: "Category updated successfully",
-              });
-          this.watcher();
+            icon: "success",
+            title: "Category updated successfully",
+          });
+          
         })
         .catch((error) => {
           console.error("Error updating document: ", error);
@@ -247,7 +253,7 @@ export default {
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             // doc.data() is never undefined for query doc snapshots
-            console.log(this.categories)
+            console.log(this.categories);
             this.categories.push(doc);
           });
         });
@@ -256,13 +262,20 @@ export default {
       // Add a new document with a generated id.
       const user = fb.auth().currentUser;
       const today = new Date();
-      const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      const dateTime = date +' '+ time;
-                    
+      const date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+      const time =
+        today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      const dateTime = date + " " + time;
+
       this.category.timestamp = dateTime;
-      this.category.updateBy = user.email;
-      
+      this.category.updateby = user.email;
+
+      this.editmode = false;
       db.collection("categories")
         .add(this.category)
         .then((docRef) => {
@@ -278,12 +291,14 @@ export default {
         });
     },
     reset() {
-      Object.assign(this.$data, this.$options.data.apply(this));
+      this.category.cname = null;
+      this.category.cdescription = null;
+      this.category.timestamp = null;
+      this.category.updateby = null;
     },
     newModal() {
       this.editmode = false;
-      this.category.name = "";
-      this.category.description = "";
+      this.reset();
       $("#AddCategory").modal("show");
     },
   },

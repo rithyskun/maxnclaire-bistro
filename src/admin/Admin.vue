@@ -24,8 +24,8 @@
             </div>
             <div class="user-info">
               <span class="user-name"
-                >Rithy
-                <strong>SKUN</strong>
+                >User
+                <strong>Admin</strong>
               </span>
               <span class="user-role">{{ email }}</span>
               <span class="user-status">
@@ -64,25 +64,12 @@
                 </router-link>
               </li>
               <li class="sidebar-dropdown">
-                <a href="#">
+                <router-link to="/pos">
                   <i class="fa fa-shopping-cart"></i>
-                  <span class="menu-text">E-commerce</span>
-                  <span class="badge badge-pill badge-danger">3</span>
-                </a>
-                <div class="sidebar-submenu">
-                  <ul>
-                    <li>
-                      <a href="#">Products </a>
-                    </li>
-                    <li>
-                      <a href="#">Orders</a>
-                    </li>
-                    <li>
-                      <a href="#">Credit cart</a>
-                    </li>
-                  </ul>
-                </div>
+                  <span class="menu-text">POS</span>
+                </router-link>
               </li>
+              
               <li>
                 <router-link to="/admin/category">
                   <i class="far fa-gem"></i>
@@ -212,7 +199,11 @@
                   </div>
                 </li>
               </ul>
-              <form class="form-inline my-2 my-lg-0">
+              <div class="form-group has-search">
+                <span class="fa fa-search form-control-feedback"></span>
+                <input type="text" class="form-control" placeholder="Search">
+              </div>
+              <!-- <form class="form-inline my-2 my-lg-0">
                 <input
                   class="form-control mr-sm-2"
                   type="search"
@@ -225,7 +216,7 @@
                 >
                   Search
                 </button>
-              </form>
+              </form> -->
             </div>
           </nav>
 
@@ -241,7 +232,7 @@
 
 <script>
 import Footer from "@/components/Footer.vue";
-import { fb } from "@/firebase";
+import { fb, db } from "@/firebase";
 
 export default {
   name: "Admin",
@@ -255,14 +246,16 @@ export default {
       showToggle: false,
       name: null,
       email: null,
+      
     };
   },
   created() {
     var user = fb.auth().currentUser;
     this.name = user.uid;
-    this.email = user.email;
+    this.email = user.email;    
   },
-  methods: {
+  
+  methods: {    
     Logout() {
       fb.auth()
         .signOut()

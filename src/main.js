@@ -39,7 +39,7 @@ const Toast = Swal.mixin({
 window.Toast = Toast;
 
 import moment from "moment";
-Vue.filter("myDate", function () {
+Vue.filter("myDate",  () => {
   return moment().format("YYYYMMDD HH:mm:ss");
 });
 
@@ -50,6 +50,13 @@ window.$ = window.jQuery = jQuery;
 import 'popper.js';
 import './assets/app.scss';
 
+import Vue2Filters from 'vue2-filters'
+ 
+Vue.use(Vue2Filters)
+
+//vue-carousel
+// https://ssense.github.io/vue-carousel/guide/
+// npm install -S vue-carousel
 
 Vue.config.productionTip = false;
 

@@ -1,15 +1,54 @@
 @import '~bootstrap/scss/bootstrap';
 @import './admin.scss';
 
+.card {
+    border-radius: 0px;
+}
+.badge {
+    border-radius: 0px;
+    font-size: 12px;
+}
 
-.container{
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 0px;
+    text-align: center;
+}
+
+.has-search .form-control {
+    padding-left: 2.375rem;
+}
+.has-search .form-control-feedback {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+.td-text-limit {
+    width: 100px;
+    /* adjust the value to fit your needs */
+    word-wrap: break-word;
+    display: inline-block;
+
+}
+
+.container {
     max-width: 1660px;
 }
+
 // .container-fluid {
 //     padding-right: 5px;
-    
+
 // }
-.fa, .fas {
+.fa,
+.fas {
     font-size: 18px;
 }
 
@@ -21,30 +60,34 @@
     margin-top: 20px;
 }
 
-body{
+body {
     font-family: 'Nunito', sans-serif !important;
 }
-.custom-btn{
+
+.custom-btn {
     border-radius: 10rem;
     padding: 0.5rem 2.5rem;
 }
+
 // hide scroll bar
 .sidebar-content {
-    -ms-overflow-style: none;  // IE 10+
-    overflow: -moz-scrollbars-none;  // Firefox
-}
-.sidebar-content::-webkit-scrollbar { 
-    display: none;  // Safari and Chrome
+    -ms-overflow-style: none; // IE 10+
+    overflow: -moz-scrollbars-none; // Firefox
 }
 
-.intro{
+.sidebar-content::-webkit-scrollbar {
+    display: none; // Safari and Chrome
+}
+
+.intro {
     margin-top: 3rem;
 }
 
-@media (min-width: 992px){
+@media (min-width: 992px) {
 
-    .modal-lg, .modal-xl {
-        max-width: 1200px;
+    .modal-lg,
+    .modal-xl {
+        max-width: 1000px;
     }
 
 }
@@ -69,6 +112,7 @@ body{
     border: none;
     border-radius: 15px;
 }
+
 .router-link-exact-active {
     // background-color: #5f6d84;
     color: rgb(45, 163, 10) !important;

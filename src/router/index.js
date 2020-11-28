@@ -9,6 +9,7 @@ import Orders from "../admin/Orders.vue";
 import Reports from "../admin/Reports.vue";
 import Profile from "../admin/Profile.vue";
 import Setting from "../admin/Setting.vue";
+import POS from "../admin/POS.vue";
 import {fb} from "../firebase";
 
 Vue.use(VueRouter);
@@ -18,6 +19,12 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home
+  },
+  {
+    path: "/pos",
+    name: "POS",
+    component: POS,
+    meta: {requiresAuth: true}
   },
   {
     path: "/admin",
@@ -60,6 +67,7 @@ const routes = [
         name: "Setting",
         component: Setting
       },
+             
     ]
   },
   {
